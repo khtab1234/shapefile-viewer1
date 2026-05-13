@@ -10,12 +10,7 @@ Deploy free on Streamlit Cloud:
 """
 
 import math, zipfile, tempfile, shutil, io
-try:
-    import rarfile
-    rarfile.UNRAR_TOOL = "unrar"   # unrar-free binary name
-    RAR_SUPPORTED = True
-except ImportError:
-    RAR_SUPPORTED = False
+
 from pathlib import Path
 
 import streamlit as st
@@ -119,11 +114,6 @@ def load_shp(uploaded_file):
         if name.lower().endswith(".zip"):
             with zipfile.ZipFile(fpath) as z:
                 z.extractall(tmp)
-        elif name.lower().endswith(".rar"):
-            if not RAR_SUPPORTED:
-                raise ImportError("rarfile غير مثبت. أضف 'rarfile' لـ requirements.txt")
-            with rarfile.RarFile(fpath) as rf:
-                rf.extractall(tmp)
         # ابحث عن .shp
         shps = list(Path(tmp).rglob("*.shp"))
         if not shps:
@@ -381,8 +371,8 @@ def build_figure(gdf, opts):
 with st.sidebar:
     st.markdown("## 🗂️ Open File")
     uploaded = st.file_uploader(
-        "Upload SHP or ZIP or RAR",
-        type=["shp","zip","rar"],
+        "Upload SHP or ZIP",
+        type=["shp","zip"],
         help="Upload a .shp file or a .zip containing the shapefile components"
     )
 
