@@ -1,0 +1,6 @@
+streamlit>=1.35.0
+geopandas>=0.14.0
+matplotlib>=3.8.0
+arabic-reshaper>=3.0.0
+python-bidi>=0.4.2
+pandas>=2.0.0
